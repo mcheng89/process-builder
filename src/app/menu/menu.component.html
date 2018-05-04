@@ -1,0 +1,66 @@
+<dx-menu
+  cssClass="menu-bar"
+  [dataSource]="[{
+    label: 'File',
+    items: [{
+      label: 'New...'
+    }, {
+      label: 'Open...',
+      separator: true
+    }, {
+      label: 'Save'
+    }, {
+      label: 'Save As...',
+      separator: true
+    }, {
+      label: 'Import...'
+    }, {
+      label: 'Export...'
+    }]
+  }, {
+    label: 'Edit',
+    items: [{
+      label: 'Undo'
+    }, {
+      label: 'Redo'
+    }]
+  }, {
+    label: 'View',
+    items: [{
+      label: 'Toolbox',
+      checked: true
+    }, {
+      label: 'Layers',
+      checked: false,
+      separator: true
+    }, {
+      label: 'Gridlines',
+      checked: true,
+      separator: true
+    }, {
+      label: 'Reset View'
+    }, {
+      label: 'Zoom In'
+    }, {
+      label: 'Zoom Out'
+    }]
+  }, {
+    label: 'Help',
+    items: [{
+      label: 'About Modeler...'
+    }]
+  }]"
+  itemTemplate="items"
+  [showFirstSubmenuMode]="{
+    label: 'onClick',
+    delay: { show: 0, hide: 300 }
+  }"
+  orientation="horizontal"
+  submenuDirection="auto"
+  [hideSubmenuOnMouseLeave]="false"
+>
+  <div *dxTemplate="let item of 'items'" class="menu-item" [class.separator]="item.separator">
+    <div class="icon"><i *ngIf="item.checked" class="fas fa-check"></i></div>
+    <div class="label">{{item.label}}</div>
+  </div>
+</dx-menu>

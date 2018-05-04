@@ -1,0 +1,21 @@
+<dx-menu
+  cssClass="toolbar-bar"
+  [dataSource]="_dataSource"
+  itemTemplate="items"
+  [showFirstSubmenuMode]="{
+    label: 'onClick',
+    delay: { show: 0, hide: 300 }
+  }"
+  orientation="horizontal"
+  submenuDirection="auto"
+  [hideSubmenuOnMouseLeave]="false"
+>
+  <div *dxTemplate="let item of 'items'" [class.separator]="item.separator">
+    <div class="menu-item">
+      <div class="icon"><i *ngIf="item.checked" class="fas fa-check"></i></div>
+      <div *ngIf="item.label" class="label">{{item.label}}</div>
+      <div *ngIf="item.icon" class="label"><i [class]="item.icon"></i></div>
+      <div class="submenu-icon" *ngIf="item.root && item.items"><i class="fas fa-caret-down"></i></div>
+    </div>
+  </div>
+</dx-menu>

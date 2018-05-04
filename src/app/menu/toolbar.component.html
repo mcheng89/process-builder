@@ -1,0 +1,47 @@
+<div class="toolbar">
+  <toolbar-group [dataSource]="[{
+    icon: 'fas fa-folder-open'
+  }, {
+    icon: 'fas fa-save'
+  }]"></toolbar-group>
+  <toolbar-group [dataSource]="[{
+    label: '100%',
+    items: [{
+      label: 'Reset View',
+      separator: true
+    }, {
+      label: '25%'
+    }, {
+      label: '50%'
+    }, {
+      label: '75%'
+    }, {
+      label: '100%'
+    }, {
+      label: '125%'
+    }, {
+      label: '150%'
+    }, {
+      label: '200%'
+    }, {
+      label: '300%'
+    }, {
+      label: '400%',
+      separator: true
+    }, {
+      label: 'Fit Window'
+    }, {
+      label: 'Page Width'
+    }]
+  }]"></toolbar-group>
+  <toolbar-group [dataSource]="[{
+    icon: 'fas fa-search-plus'
+  }, {
+    icon: 'fas fa-search-minus'
+  }]"></toolbar-group>
+  <toolbar-group [dataSource]="[{
+    icon: 'fas fa-undo'
+  }, {
+    icon: 'fas fa-redo'
+  }]"></toolbar-group>
+</div>
