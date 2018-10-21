@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { AppService } from './app.service';
 
+import { EditorComponent } from './editor/editor.component';
 import { ComponentListComponent } from './component-list.component';
 
 import { MenuComponent } from './menu/menu.component';
@@ -24,6 +25,7 @@ import { DxMenuModule } from 'devextreme-angular';
   ],
   declarations: [
     AppComponent,
+    EditorComponent,
     ComponentListComponent,
     MenuComponent,
     ToolbarComponent,

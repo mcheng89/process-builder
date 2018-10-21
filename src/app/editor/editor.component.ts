@@ -40,11 +40,6 @@ mxGraphView.prototype.validateBackgroundPage = function () {
       if (firstChild != null) {
         this.backgroundPageShape = this.createBackgroundPageShape(bounds);
         this.backgroundPageShape.scale = 1;
-
-        // Shadow filter causes problems in outline window in quirks mode. IE8 standards
-        // also has known rendering issues inside mxWindow but not using shadow is worse.
-        this.backgroundPageShape.isShadow = !mxClient.IS_QUIRKS;
-        this.backgroundPageShape.dialect = mxConstants.DIALECT_STRICTHTML;
         this.backgroundPageShape.init(graph.container);
 
         // Required for the browser to render the background page in correct order
@@ -65,13 +60,13 @@ mxGraphView.prototype.validateBackgroundPage = function () {
 }
 // Creates background page shape
 mxGraphView.prototype.createBackgroundPageShape = function (bounds) {
-  return new mxRectangleShape(bounds, '#ffffff', this.graph.defaultPageBorderColor);
+  return new mxRectangleShape(bounds, '#ffffff', '#ffffff');
 };
 // Updates the CSS of the background to draw the grid
 mxGraphView.prototype.validateBackgroundStyles = function () {
   var graph = this.graph;
   var color = this.graphBackground;
-  var gridColor = (color != null && this.gridColor != color.toLowerCase()) ? this.gridColor : '#ffffff';
+  var gridColor = this.gridColor;
   var image = 'none';
   var position = '';
 
@@ -207,11 +202,11 @@ mxGraphView.prototype.getGraphBounds = function () {
 };
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: 'editor',
+  templateUrl: './editor.component.html',
+  styleUrls: ['./editor.component.scss']
 })
-export class AppComponent implements AfterViewInit {
+export class EditorComponent implements AfterViewInit {
   @ViewChild('editor') editorEl: ElementRef;
 
   ngAfterViewInit() {
@@ -305,16 +300,13 @@ export class AppComponent implements AfterViewInit {
 
     // Scrolls graph to visible area
     var bounds = graph.getGraphBounds();
-    
-    if (bounds.width > 0 && bounds.height > 0)
-    {
-      if (bounds.x > graph.container.scrollLeft + graph.container.clientWidth * 0.9)
-      {
+
+    if (bounds.width > 0 && bounds.height > 0) {
+      if (bounds.x > graph.container.scrollLeft + graph.container.clientWidth * 0.9) {
         graph.container.scrollLeft = Math.min(bounds.x + bounds.width - graph.container.clientWidth, bounds.x - 10);
       }
-      
-      if (bounds.y > graph.container.scrollTop + graph.container.clientHeight * 0.9)
-      {
+
+      if (bounds.y > graph.container.scrollTop + graph.container.clientHeight * 0.9) {
         graph.container.scrollTop = Math.min(bounds.y + bounds.height - graph.container.clientHeight, bounds.y - 10);
       }
     }
