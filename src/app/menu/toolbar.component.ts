@@ -39,4 +39,15 @@ export class ToolbarComponent {
     this._graph.zoomTo(1);
 		this.editor.resetScrollbars();
   }
+  
+  private customZoomVisible: boolean = false;
+  private customZoomValue: number = 100;
+  customZoom = () => {
+    this.customZoomValue = parseInt(this.zoomPercent.substring(0, this.zoomPercent.length - 1));
+    this.customZoomVisible = true;
+  }
+  customZoomSave = () => {
+    this._graph.zoomTo(this.customZoomValue / 100);
+    this.customZoomVisible = false;
+  }
 }

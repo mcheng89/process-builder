@@ -15,6 +15,7 @@ import { ToolbarComponent } from './menu/toolbar.component';
 import { ToolbarGroupComponent } from './menu/toolbar-group.component';
 
 import { DxMenuModule } from 'devextreme-angular';
+import { DxPopupModule } from "devextreme-angular"
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { DxMenuModule } from 'devextreme-angular';
     HttpClientModule,
     FormsModule,
     DxMenuModule,
+    DxPopupModule,
   ],
   declarations: [
     AppComponent,

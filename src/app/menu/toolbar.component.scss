@@ -8,10 +8,74 @@
   toolbar-group {
     border-right: 1px solid #d6d6d6;
     border-top: 1px solid white;
-    padding: 2px 10px;
+    padding: 2px 10px 4px;
   }
   toolbar-group:last-child {
     border-right: 0;
     flex: 1;
+  }
+}
+
+
+::ng-deep {
+  .custom-zoom {
+
+    &.dx-popup-wrapper > .dx-overlay-content {
+      border-radius: 0;
+    }
+    .dx-popup-title.dx-toolbar .dx-toolbar-label {
+      font-size: 18px;
+    }
+
+    .dx-popup-title {
+      border-bottom: 0;
+      background: #1b5692;
+      color: white;
+    }
+    .dx-popup-title .dx-closebutton .dx-icon {
+      color: white;
+    }
+    .dx-popup-title .dx-closebutton{
+      &.dx-state-hover, &.dx-state-focused, &.dx-state-active {
+        background-color: transparent;
+        border-color: transparent;
+        box-shadow: none;
+      }
+    }
+
+    .form {
+      display: flex;
+      align-items: center;
+
+      .input {
+        flex: 1;
+        margin-left: 15px;
+
+        input {
+          width: 100%;
+          padding: 5px;
+          font-size: 13px;
+        }
+      }
+    }
+
+    .actions {
+      text-align: right;
+      padding: 12px 0;
+    }
+    .button.save {
+      background-color: #3e81ef;
+      color: #fff;
+    }
+    .button.cancel {
+      background: #dadada;
+    }
+    .button {
+      display: inline-block;
+      padding: 7px 17px;
+      font-size: 13px;
+      cursor: pointer;
+      margin-left: 5px;
+    }
   }
 }

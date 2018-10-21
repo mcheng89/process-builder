@@ -32,7 +32,7 @@
   /* base */
   dx-menu.toolbar-bar {
     .dx-menu-item {
-      color: #424242;
+      color: #525252;
     }
     .dx-menu-item-content {
       padding: 0;
@@ -47,13 +47,13 @@
     display: flex;
   }
   .toolbar .menu-item {
-    padding: 3px 5px;
+    padding: 4px 5px;
     border-radius: 3px;
     margin-right: 3px;
   }
   .toolbar .menu-item:hover {
     border: 1px solid #9a9a9a;
-    padding: 2px 4px;
+    padding: 3px 4px;
   }
 
   /* hide base menu-item background */
