@@ -6,4 +6,21 @@ import { Component } from '@angular/core';
   styleUrls: ['./component-list.component.scss']
 })
 export class ComponentListComponent {
+  components: any = [{
+    label: "General"
+  }, {
+    label: "Misc"
+  }, {
+    label: "Advanced"
+  }, {
+    label: "Basic"
+  }, {
+    label: "Arrows"
+  }, {
+    label: "UML"
+  }, {
+    label: "BPMN General"
+  }, {
+    label: "Flowchart"
+  }];
 }

@@ -1,0 +1,50 @@
+.search-container {
+  background: whiteSmoke;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 12px 9px 10px;
+
+  .search {
+    font-size: 12px;
+    border: 1px solid rgb(213, 213, 213);
+    border-radius: 4px;
+    width: 100%;
+    padding: 2px 3px;
+    background: white;
+
+    display: flex;
+    align-items: center;
+  }
+
+  input {
+    flex: 1;
+    border: 0;
+    outline: none;
+    padding: 4px 0 4px 4px;
+    font-size: 12px;
+  }
+  .icon {
+    padding: 0 4px;
+    color: #757575;
+  }
+}
+
+
+.title {
+  border-bottom: 1px solid #e5e5e5;
+  padding: 7px 0px 7px 10px;
+  font-size: 12px;
+  background: #eeeeee;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  display: flex;
+
+  .expand {
+    margin-right: 5px;
+    color: #757575;
+  }
+}
+.title:hover {
+  background: #e5e5e5;
+}
