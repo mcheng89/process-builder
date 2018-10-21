@@ -1,10 +1,10 @@
 <div class="app">
   <div class="menu">
     <app-menu></app-menu>
-    <app-toolbar></app-toolbar>
+    <app-toolbar [editor]="editor" [graph]="graph"></app-toolbar>
   </div>
   <div class="content">
     <component-list></component-list>
-    <editor></editor>
+    <editor (graph)="graph = $event"></editor>
   </div>
 </div>

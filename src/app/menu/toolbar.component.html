@@ -5,39 +5,61 @@
     icon: 'fas fa-save'
   }]"></toolbar-group>
   <toolbar-group [dataSource]="[{
-    label: '100%',
+    label: zoomPercent,
     items: [{
       label: 'Reset View',
+      click: resetView,
       separator: true
     }, {
-      label: '25%'
+      label: '25%',
+      click: zoomTo,
+      scale: .25
     }, {
-      label: '50%'
+      label: '50%',
+      click: zoomTo,
+      scale: .50
     }, {
-      label: '75%'
+      label: '75%',
+      click: zoomTo,
+      scale: .75
     }, {
-      label: '100%'
+      label: '100%',
+      click: zoomTo,
+      scale: 1
     }, {
-      label: '125%'
+      label: '125%',
+      click: zoomTo,
+      scale: 1.25
     }, {
-      label: '150%'
+      label: '150%',
+      click: zoomTo,
+      scale: 1.5
     }, {
-      label: '200%'
+      label: '200%',
+      click: zoomTo,
+      scale: 2
     }, {
-      label: '300%'
+      label: '300%',
+      click: zoomTo,
+      scale: 3
     }, {
       label: '400%',
+      click: zoomTo,
+      scale: 4,
       separator: true
     }, {
-      label: 'Fit Window'
+      label: 'Page Width',
+      separator: true
     }, {
-      label: 'Page Width'
+      label: 'Custom...'
     }]
   }]"></toolbar-group>
   <toolbar-group [dataSource]="[{
-    icon: 'fas fa-search-plus'
+    icon: 'fas fa-search-plus',
+    click: zoomIn
   }, {
-    icon: 'fas fa-search-minus'
+    icon: 'fas fa-search-minus',
+    click: zoomOut
   }]"></toolbar-group>
   <toolbar-group [dataSource]="[{
     icon: 'fas fa-undo'

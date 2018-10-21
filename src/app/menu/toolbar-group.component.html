@@ -9,6 +9,7 @@
   orientation="horizontal"
   submenuDirection="auto"
   [hideSubmenuOnMouseLeave]="false"
+  (onItemClick)="itemClick($event)"
 >
   <div *dxTemplate="let item of 'items'" [class.separator]="item.separator">
     <div class="menu-item">

@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, Output, EventEmitter, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 
 import {
   mxClient,
@@ -15,7 +15,6 @@ import {
 
 import { Base64 } from 'js-base64';
 
-mxGraph.prototype.pageScale = 1;
 mxGraph.prototype.pageFormat = new mxRectangle(0, 0, 1000, 1000);
 
 mxGraphView.prototype.gridSteps = 4;
@@ -178,7 +177,7 @@ mxGraph.prototype.getPageLayout = function () {
  * Returns the size of the page format scaled with the page size.
  */
 mxGraph.prototype.getPageSize = function () {
-  return new mxRectangle(0, 0, this.pageFormat.width * this.pageScale, this.pageFormat.height * this.pageScale);
+  return new mxRectangle(0, 0, this.pageFormat.width, this.pageFormat.height);
 };
 
 /**
@@ -209,8 +208,12 @@ mxGraphView.prototype.getGraphBounds = function () {
 export class EditorComponent implements AfterViewInit {
   @ViewChild('editor') editorEl: ElementRef;
 
+  private graph: any;
+  @Output('graph') graphEmit = new EventEmitter();
+
   ngAfterViewInit() {
     let graph = new mxGraph();
+    this.graph = graph;
     mxGraph.prototype.init.apply(graph, [this.editorEl.nativeElement]);
 
     // add selection...
@@ -289,10 +292,13 @@ export class EditorComponent implements AfterViewInit {
 
     graph.view.validateBackground();
     graph.sizeDidChange();
-    this.initScrollbar(graph);
+    this.resetScrollbars();
+
+    setTimeout(() => this.graphEmit.emit(graph), 1);
   }
 
-  initScrollbar(graph) {
+  resetScrollbars() {
+    var graph = this.graph;
     var pad = graph.getPagePadding();
     graph.container.scrollTop = Math.floor(pad.y) - 1;
     graph.container.scrollLeft = Math.floor(Math.min(pad.x,

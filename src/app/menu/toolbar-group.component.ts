@@ -14,4 +14,11 @@ export class ToolbarGroupComponent {
       v.root = true;
     });
   }
+
+  itemClick(event) {
+    const item = event.itemData;
+    if (item.click) {
+      item.click(item);
+    }
+  }
 }
