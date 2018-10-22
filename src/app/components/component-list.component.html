@@ -1,0 +1,16 @@
+<div class="search-container">
+    <div class="search">
+      <input placeholder="Search Components" type="text">
+      <div class="icon"><i class="fas fa-search"></i></div>
+    </div>
+</div>
+<div *ngFor="let item of components">
+  <div class="title" (click)="item.expanded = !!!item.expanded">
+    <div *ngIf="!item.expanded" class="expand"><i class="fas fa-caret-right"></i></div>
+    <div *ngIf="item.expanded" class="expand"><i class="fas fa-caret-down"></i></div>
+    <div>{{item.label}}</div>
+  </div>
+  <div class="items" *ngIf="item.expanded">
+      <component-item *ngFor="let component of item.items" [item]="component" [graph]="graph"></component-item>
+  </div>
+</div>
