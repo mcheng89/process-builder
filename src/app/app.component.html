@@ -1,6 +1,12 @@
 <div class="app">
   <div class="menu">
-    <app-menu [(outlineVisible)]="outlineVisible"></app-menu>
+    <div class="wrapper">
+      <div class="logo">
+        <div class="icon"><i class="fas fa-project-diagram"></i></div>
+        <div>Process Modeler</div>
+      </div>
+      <app-menu [(outlineVisible)]="outlineVisible"></app-menu>
+    </div>
     <app-toolbar [editor]="editor" [graph]="graph"></app-toolbar>
   </div>
   <div class="content">

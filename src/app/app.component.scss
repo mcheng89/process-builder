@@ -5,6 +5,22 @@
   flex-direction: column;
 }
 
+.menu .wrapper {
+  display: flex;
+  align-items: center;
+  background-color: #0d70c5;
+}
+
+.logo {
+  color: #fff;
+  padding: 8px 14px;
+  display: flex;
+
+  .icon {
+    margin-right: 10px;
+  }
+}
+
 .content {
   flex: 1;
   height: 1%;

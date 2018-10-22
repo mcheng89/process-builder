@@ -6,17 +6,20 @@
 
   /* base menu */
   dx-menu.menu-bar {
-    .dx-menu-item-wrapper:first-child .dx-menu-item-content {
-      padding-left: 14px;
-    }
     .dx-menu-item-content {
       padding: 7px 9px;
       font-weight: bold;
+      color: white;
+    }
+    .dx-menu-item.dx-state-hover:not(.dx-menu-item-expanded) {
+      background: transparent;
     }
   }
 
   /* submenu */
   .menu-bar .dx-submenu {
+    border: 0;
+
     .dx-menu-item-content {
       padding: 5px 7px;
     }
@@ -42,14 +45,15 @@
   /* hide base menu-item background */
   .menu-bar {
     .dx-menu-item-expanded {
-      background-color: #dcdcdc;
+      background-color: white;
+
+      .dx-menu-item-content {
+        color: black;
+      }
     }
     .dx-context-menu-container-border {
       border: 0;
       box-shadow: none;
-    }
-    .dx-context-menu-content-delimiter {
-      background-color: transparent;
     }
   }
 }
