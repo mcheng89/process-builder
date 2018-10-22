@@ -10,5 +10,6 @@ import { EditorComponent } from './editor/editor.component';
 export class AppComponent {
   @ViewChild(EditorComponent) editor: EditorComponent;
   private graph: any;
+  private outlineVisible: boolean = true;
 }
 

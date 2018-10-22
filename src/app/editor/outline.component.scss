@@ -1,0 +1,48 @@
+::ng-deep {
+  .outline {
+
+    &.dx-popup-wrapper > .dx-overlay-content {
+      border-radius: 0;
+    }
+    .dx-popup-title.dx-toolbar {
+      padding: 3px 11px;
+    }
+    .dx-popup-title.dx-toolbar .dx-toolbar-items-container {
+      height: 22px;
+    }
+    .dx-popup-title.dx-toolbar .dx-toolbar-label {
+      font-size: 13px;
+    }
+    .dx-popup-title .dx-closebutton .dx-icon {
+      font-size: 13px;
+    }
+
+    .dx-popup-title {
+      border-bottom: 0;
+      background: #828282;
+      color: white;
+    }
+    .dx-popup-title .dx-closebutton .dx-icon {
+      color: white;
+    }
+    .dx-popup-title .dx-closebutton{
+      &.dx-state-hover, &.dx-state-focused, &.dx-state-active {
+        background-color: transparent;
+        border-color: transparent;
+        box-shadow: none;
+      }
+    }
+
+
+    .dx-overlay-content .dx-popup-content > .dx-template-wrapper {
+      position: relative;
+    }
+    .dx-popup-content {
+      padding: 0;
+    }
+    .editor {
+      background-color: #ebebeb;
+    }
+
+  }
+}

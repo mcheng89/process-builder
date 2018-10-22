@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import { AppService } from './app.service';
 
 import { EditorComponent } from './editor/editor.component';
+import { OutlineComponent } from './editor/outline.component';
+
 import { ComponentItemComponent } from './components/component-item.component';
 import { ComponentListComponent } from './components/component-list.component';
 
@@ -29,6 +31,7 @@ import { DxPopupModule } from "devextreme-angular"
   declarations: [
     AppComponent,
     EditorComponent,
+    OutlineComponent,
     ComponentItemComponent,
     ComponentListComponent,
     MenuComponent,

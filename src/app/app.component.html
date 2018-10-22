@@ -1,6 +1,6 @@
 <div class="app">
   <div class="menu">
-    <app-menu></app-menu>
+    <app-menu [(outlineVisible)]="outlineVisible"></app-menu>
     <app-toolbar [editor]="editor" [graph]="graph"></app-toolbar>
   </div>
   <div class="content">
@@ -8,3 +8,4 @@
     <editor (graph)="graph = $event"></editor>
   </div>
 </div>
+<outline [graph]="graph" [(outlineVisible)]="outlineVisible"></outline>

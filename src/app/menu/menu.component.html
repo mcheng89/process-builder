@@ -28,7 +28,8 @@
     label: 'View',
     items: [{
       label: 'Outline',
-      checked: true
+      checked: outlineVisible,
+      click: outlineToggle
     }, {
       label: 'Layers',
       checked: false,
@@ -58,6 +59,7 @@
   orientation="horizontal"
   submenuDirection="auto"
   [hideSubmenuOnMouseLeave]="false"
+  (onItemClick)="itemClick($event)"
 >
   <div *dxTemplate="let item of 'items'" class="menu-item" [class.separator]="item.separator">
     <div class="icon"><i *ngIf="item.checked" class="fas fa-check"></i></div>

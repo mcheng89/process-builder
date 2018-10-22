@@ -29,7 +29,7 @@ var config = {
     rules: [
       {
         test: /mxClient\.js$/,
-        loader: 'exports-loader?mxClient,mxGraph,mxGraphModel,mxConnectionHandler,mxImage,mxKeyHandler,mxRubberband,mxConstants,mxEdgeStyle,mxEvent,mxVertexHandler,mxUtils,mxGraphHandler,mxGraphView,mxPoint,mxGeometry,mxRectangle,mxRectangleShape,mxCell'
+        loader: 'exports-loader?mxClient,mxGraph,mxGraphModel,mxConnectionHandler,mxImage,mxKeyHandler,mxRubberband,mxConstants,mxEdgeStyle,mxEvent,mxVertexHandler,mxUtils,mxGraphHandler,mxGraphView,mxPoint,mxGeometry,mxRectangle,mxRectangleShape,mxCell,mxOutline'
       },
       {
         test: /\.ts$/,
