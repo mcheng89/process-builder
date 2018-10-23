@@ -10,3 +10,43 @@
 ::ng-deep .geBackgroundPage {
   box-shadow: 0px 0px 3px 0px #d9d9d9;
 }
+
+
+::ng-deep .editor-vertex {
+  background: #f6f8fa;
+  color: #32363c;
+  border-radius: 3px;
+  box-shadow: 0px 1px 3px #737373cf;
+  
+
+  .content {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+  }
+  .task {
+    flex: 1;
+    width: 1%;
+    text-align: left;
+
+    .name, .description {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .name {
+      font-size: 15px;
+      margin-bottom: 3px;
+      font-weight: bold;
+    }
+    .description {
+      font-size: 12px;
+      color: #696969;
+    }
+  }
+  .icon {
+    margin-right: 11px;
+    color: #7000fb;
+    font-size: 8px;
+  }
+}

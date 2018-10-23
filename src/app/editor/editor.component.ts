@@ -14,14 +14,19 @@ import {
 } from 'mxgraph/javascript/mxClient';
 
 import { Base64 } from 'js-base64';
+mxConstants.VERTEX_SELECTION_COLOR = '#00a8ff';
+mxConstants.HANDLE_FILLCOLOR = '#29b6f2';
+mxConstants.HANDLE_STROKECOLOR = '#0088cf';
 
 mxGraph.prototype.pageScale = 1;
 mxGraph.prototype.pageFormat = new mxRectangle(0, 0, 1000, 1000);
 
 mxGraphView.prototype.gridSteps = 4;
 mxGraphView.prototype.minGridSize = 4;
-mxGraphView.prototype.graphBackground = '#ffffff';
-mxGraphView.prototype.gridColor = '#e0e0e0';
+//mxGraphView.prototype.graphBackground = '#ffffff';
+mxGraphView.prototype.graphBackground = '#f5f5f5';
+//mxGraphView.prototype.gridColor = '#e0e0e0';
+mxGraphView.prototype.gridColor = '#dae4f9';
 
 // https://github.com/jgraph/mxgraph/blob/master/javascript/examples/grapheditor/www/js/Editor.js#L1747
 // Uses HTML for background pages (to support grid background image)
@@ -220,6 +225,36 @@ export class EditorComponent implements AfterViewInit {
     // add selection...
     var rubberband = new mxRubberband(graph);
 
+    
+    let style = graph.getStylesheet().getDefaultVertexStyle();
+    delete style[mxConstants.STYLE_STROKECOLOR];
+    delete style[mxConstants.STYLE_FILLCOLOR];
+    var graphGetLabel = graph.getLabel;
+    mxGraph.prototype.getLabel = function (cell: any) {
+      if (this.model.isVertex(cell)) {
+        var container = document.createElement('div');
+        container.className = "editor-vertex";
+        container.style.height = (cell.geometry.height) + "px";
+        container.style.width = (cell.geometry.width) + "px";
+        container.innerHTML = `<div class="content">
+          <div class="icon">
+            <span class="fa-stack fa-2x">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fas fa-cog fa-stack-1x fa-inverse"></i>
+            </span>
+          </div>
+          <div class="task">
+            <div class="name">` + cell.value + `</div>
+            <div class="description">Input > Table input</div>
+          </div>
+        </div>`;
+        return container;
+      }
+      return graphGetLabel.apply(this, arguments);
+    }
+
+
+
     mxEvent.addListener(window, 'resize', () => {
       graph.sizeDidChange();
     });
@@ -233,7 +268,7 @@ export class EditorComponent implements AfterViewInit {
     };
 
     // Fits the number of background pages to the graph
-    graph.view.getBackgroundPageBounds = function () {
+    mxGraphView.prototype.getBackgroundPageBounds = function () {
       var layout = this.graph.getPageLayout();
       var page = this.graph.getPageSize();
 
@@ -294,6 +329,24 @@ export class EditorComponent implements AfterViewInit {
     graph.view.validateBackground();
     graph.sizeDidChange();
     this.resetScrollbars();
+
+        // Gets the default parent for inserting new cells. This
+				// is normally the first child of the root (ie. layer 0).
+				var parent = graph.getDefaultParent();
+								
+				// Adds cells to the model in a single step
+				graph.getModel().beginUpdate();
+				try
+				{
+					var v1 = graph.insertVertex(parent, null, 'Load Oracle Table', 150, 80, 220, 60);
+					var v2 = graph.insertVertex(parent, null, 'Pivot Records', 280, 250, 220, 60);
+					var e1 = graph.insertEdge(parent, null, '', v1, v2);
+				}
+				finally
+				{
+					// Updates the display
+					graph.getModel().endUpdate();
+				}
 
     setTimeout(() => this.graphEmit.emit(graph), 1);
   }

@@ -18,8 +18,8 @@ export class ComponentItemComponent implements AfterViewInit {
   @Input('item') item;
   @Input('graph') graph;
 
-  width: number = 50;
-  height: number = 50;
+  width: number = 220;
+  height: number = 60;
 
   ngAfterViewInit() {
     var dragSource = mxUtils.makeDraggable(this.componentEl.nativeElement, this.graph,
@@ -43,7 +43,7 @@ export class ComponentItemComponent implements AfterViewInit {
     let elt = mxEvent.getSource(evt);
     console.log(elt);
 
-    var value = 'testvalue';
+    var value = this.item.label;
     var cells = [new mxCell(value, new mxGeometry(0, 0, this.width, this.height))];
     cells[0].vertex = true;
 
