@@ -4,6 +4,8 @@ import {
   mxOutline
 } from 'mxgraph/javascript/mxClient';
 
+import { EditorComponent } from './editor.component';
+
 @Component({
   selector: 'outline',
   templateUrl: './outline.component.html',
@@ -21,6 +23,11 @@ export class OutlineComponent {
       outline.border = 20;
 
       outline.init(this.outlineEl.nativeElement);
+
+      EditorComponent.setupPageBackground(outline.outline);
+
+      // force initial background refresh...
+      outline.outline.view.validateBackground();
     }
   }
 

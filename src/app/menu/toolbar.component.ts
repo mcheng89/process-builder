@@ -36,10 +36,9 @@ export class ToolbarComponent {
     this._graph.zoomTo(item.scale);
   }
   resetView = () => {
-    this._graph.zoomTo(1);
-		this.editor.resetScrollbars();
+    this.editor.resetView();
   }
-  
+
   private customZoomVisible: boolean = false;
   private customZoomValue: number = 100;
   customZoom = () => {
