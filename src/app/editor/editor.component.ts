@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, Output, EventEmitter, ViewChild, ElementRef, AfterViewInit, ComponentFactoryResolver, Injector, ApplicationRef } from '@angular/core';
 
 import {
   mxClient,
@@ -12,7 +12,10 @@ import {
   mxRubberband,
   mxPoint,
   mxUtils,
+  mxVertexHandler,
 } from 'mxgraph/javascript/mxClient';
+
+import { VertexComponent } from './vertex.component';
 
 import { Base64 } from 'js-base64';
 
@@ -28,6 +31,9 @@ mxGraphView.prototype.minGridSize = 4;
 mxGraphView.prototype.graphBackground = '#f5f5f5';
 mxGraphView.prototype.gridColor = '#dae4f9';
 
+const minWidth = 220;
+const minHeight = 85;
+
 
 @Component({
   selector: 'editor',
@@ -35,12 +41,20 @@ mxGraphView.prototype.gridColor = '#dae4f9';
   styleUrls: ['./editor.component.scss']
 })
 export class EditorComponent implements AfterViewInit {
+  constructor(
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private injector: Injector,
+    private applicationRef: ApplicationRef
+  ) { }
+
   @ViewChild('editor') editorEl: ElementRef;
 
   private graph: any;
   @Output('graph') graphEmit = new EventEmitter();
 
   ngAfterViewInit() {
+    var self = this;
+
     let graph = new mxGraph();
     this.graph = graph;
     mxGraph.prototype.init.apply(graph, [this.editorEl.nativeElement]);
@@ -56,25 +70,32 @@ export class EditorComponent implements AfterViewInit {
     mxGraph.prototype.getLabel = function (cell: any) {
       if (this.model.isVertex(cell)) {
         var container = document.createElement('div');
-        container.className = "editor-vertex";
+        const vertexComponent = self.componentFactoryResolver.resolveComponentFactory(VertexComponent);
+        const componentRef = vertexComponent.create(self.injector, [], container);
+        self.applicationRef.attachView(componentRef.hostView);
+        componentRef.instance.component = cell.value;
+
         container.style.height = (cell.geometry.height) + "px";
         container.style.width = (cell.geometry.width) + "px";
-        container.innerHTML = `<div class="content">
-          <div class="icon">
-            <span class="fa-stack fa-2x">
-              <i class="fas fa-circle fa-stack-2x"></i>
-              <i class="fas fa-cog fa-stack-1x fa-inverse"></i>
-            </span>
-          </div>
-          <div class="task">
-            <div class="name">` + cell.value + `</div>
-            <div class="description">Input > Table input</div>
-          </div>
-        </div>`;
+        container.className = "editor-vertex";
         return container;
       }
       return graphGetLabel.apply(this, arguments);
     }
+    // min width/height settings
+    var vertexHandlerUnion = mxVertexHandler.prototype.union;
+    mxVertexHandler.prototype.union = function (bounds: any, dx: any, dy: any, index: any, gridEnabled: any, scale: any, tr: any) {
+      var result = vertexHandlerUnion.apply(this, arguments);
+
+      result.width = Math.max(result.width, minWidth);
+      result.height = Math.max(result.height, minHeight);
+
+      return result;
+    }
+    // disable editing of cells
+    graph.isCellEditable = function (cell: any) {
+      return false;
+    };
 
     // Changes the default style for edges
     style = graph.getStylesheet().getDefaultEdgeStyle();
@@ -98,8 +119,8 @@ export class EditorComponent implements AfterViewInit {
     // Adds cells to the model in a single step
     graph.getModel().beginUpdate();
     try {
-      var v1 = graph.insertVertex(parent, null, 'Load Oracle Table', 150, 80, 220, 60);
-      var v2 = graph.insertVertex(parent, null, 'Pivot Records', 280, 250, 220, 60);
+      var v1 = graph.insertVertex(parent, null, 'Load Oracle Table', 150, 80, minWidth, minHeight);
+      var v2 = graph.insertVertex(parent, null, 'Pivot Records', 210, 260, minWidth, minHeight);
       var e1 = graph.insertEdge(parent, null, '', v1, v2);
     }
     finally {
@@ -228,7 +249,7 @@ export class EditorComponent implements AfterViewInit {
       var size = tmp2;
       var svg = '<svg width="' + size + '" height="' + size + '" xmlns="' + mxConstants.NS_SVG + '">' +
         '<defs><pattern id="grid" width="' + tmp2 + '" height="' + tmp2 + '" patternUnits="userSpaceOnUse">' +
-        '<path d="' + d.join(' ') + '" fill="none" stroke="' + color + '" opacity="0.2" stroke-width="1"/>' +
+        '<path d="' + d.join(' ') + '" fill="none" stroke="' + color + '" opacity="0.3" stroke-width="1"/>' +
         '<path d="M ' + tmp2 + ' 0 L 0 0 0 ' + tmp2 + '" fill="none" stroke="' + color + '" stroke-width="1"/>' +
         '</pattern></defs><rect width="100%" height="100%" fill="url(#grid)"/></svg>';
 

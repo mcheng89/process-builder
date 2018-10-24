@@ -1,0 +1,193 @@
+:host {
+  .content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #e1e4e8;
+  }
+  .task {
+    flex: 1;
+    width: 1%;
+    text-align: left;
+
+    .name, .description {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .name {
+      font-size: 14px;
+      margin-bottom: 3px;
+      font-weight: bold;
+    }
+    .description {
+      font-size: 11px;
+      color: #696969;
+    }
+  }
+  .icon {
+    margin-right: 10px;
+    color: #7000fb;
+    font-size: 7px;
+  }
+
+  .actions {
+    background: #eef1f3;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    padding: 6px 12px;
+    display: flex;
+    justify-content: flex-end;
+    font-size: 12px;
+
+    > div {
+      margin-left: 8px;
+      cursor: pointer;
+    }
+
+    .edit {
+      color: #0059bd;
+    }
+    .delete {
+      color: #af4545;
+    }
+  }
+}
+
+
+::ng-deep {
+  .component-properties {
+
+    &.dx-popup-wrapper > .dx-overlay-content {
+      border-radius: 3px;
+    }
+    .dx-popup-title.dx-toolbar .dx-toolbar-label {
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .dx-popup-title .dx-closebutton .dx-icon {
+      font-size: 13px;
+    }
+
+    .dx-popup-title {
+      background: #eef1f3;
+      color: #32363c;
+      border-bottom: 1px solid #e1e4e8;
+    }
+    .dx-popup-title.dx-toolbar {
+      padding: 3px 16px;
+    }
+    .dx-popup-title.dx-toolbar .dx-toolbar-items-container {
+      height: 30px;
+    }
+    .dx-popup-title .dx-closebutton .dx-icon {
+      color: #32363c;
+    }
+    .dx-popup-title .dx-closebutton{
+      &.dx-state-hover, &.dx-state-focused, &.dx-state-active {
+        background-color: transparent;
+        border-color: transparent;
+        box-shadow: none;
+      }
+    }
+
+    .dx-popup-content {
+      background: #fdfdfe;
+      padding: 0;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .info {
+      flex: 1;
+      display: flex;
+      align-items: flex-start;
+      padding: 10px 14px;
+      border-bottom: 1px solid #e1e4e8;
+    }
+    .task {
+      flex: 1;
+      width: 1%;
+      text-align: left;
+  
+      .name {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      .name {
+        font-size: 14px;
+        margin-bottom: 3px;
+        font-weight: bold;
+      }
+      .description {
+        font-size: 11px;
+        color: #696969;
+      }
+    }
+    .icon {
+      color: #7000fb;
+      font-size: 9px;
+      margin-right: 10px;
+      margin-top: 5px;
+    }
+
+    .title {
+      font-size: 14px;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #696969;
+    }
+
+    .form {
+      padding: 13px 18px;
+      flex: 1;
+      border-bottom: 1px solid #e1e4e8;
+    }
+    .form:last-child {
+      border-bottom: 0;
+    }
+    .row {
+      margin-bottom: 12px;
+    }
+    .label {
+      color: #32363c;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 3px;
+    }
+    .input input {
+      width: 100%;
+      border-radius: 2px;
+      outline: none;
+      border: 1px solid #dadada;
+      background: #f4f5f7;
+      padding: 7px 0 7px 7px;
+      font-size: 13px;
+    }
+
+    .actions {
+      padding: 11px 19px 14px;
+      border-top: 1px solid #e1e4e8;
+    }
+    .button.save {
+      background-color: #2ab321;
+      color: #fff;
+      font-weight: bold;
+    }
+    .button.cancel {
+      background: #dadada;
+    }
+    .button {
+      padding: 7px 17px;
+      font-size: 13px;
+      border-radius: 2px;
+      cursor: pointer;
+      text-align: center;
+    }
+  }
+}

@@ -19,18 +19,30 @@
 
 ::ng-deep {
   .custom-zoom {
+    &.dx-overlay-shader {
+      background-color: rgba(255, 255, 255, 0.55);
+    }
 
     &.dx-popup-wrapper > .dx-overlay-content {
       border-radius: 0;
     }
     .dx-popup-title.dx-toolbar .dx-toolbar-label {
-      font-size: 18px;
+      font-size: 16px;
+    }
+    .dx-popup-title .dx-closebutton .dx-icon {
+      font-size: 15px;
     }
 
     .dx-popup-title {
       border-bottom: 0;
-      background: #1b5692;
+      background: #0070e2;
       color: white;
+    }
+    .dx-popup-title.dx-toolbar {
+      padding: 3px 16px;
+    }
+    .dx-popup-title.dx-toolbar .dx-toolbar-items-container {
+      height: 33px;
     }
     .dx-popup-title .dx-closebutton .dx-icon {
       color: white;

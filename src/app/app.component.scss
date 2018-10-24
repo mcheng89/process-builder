@@ -39,3 +39,11 @@
     display: block;
   }
 }
+
+
+
+::ng-deep {
+  .dx-overlay-wrapper input, .dx-overlay-wrapper textarea {
+    font-family: 'Open Sans';
+  }
+}

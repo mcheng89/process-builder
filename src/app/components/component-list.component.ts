@@ -56,7 +56,7 @@ export class ComponentListComponent {
     label: "Flow",
     items: []
   }, {
-    label: "Scriptiong",
+    label: "Scripting",
     items: []
   }, {
     label: "Lookup",

@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { AppService } from './app.service';
 
 import { EditorComponent } from './editor/editor.component';
+import { VertexComponent } from './editor/vertex.component';
 import { OutlineComponent } from './editor/outline.component';
 
 import { ComponentItemComponent } from './components/component-item.component';
@@ -17,8 +18,11 @@ import { MenuComponent } from './menu/menu.component';
 import { ToolbarComponent } from './menu/toolbar.component';
 import { ToolbarGroupComponent } from './menu/toolbar-group.component';
 
-import { DxMenuModule } from 'devextreme-angular';
-import { DxPopupModule } from "devextreme-angular"
+import {
+  DxMenuModule,
+  DxPopupModule,
+  DxScrollViewModule,
+} from 'devextreme-angular';
 
 @NgModule({
   imports: [
@@ -27,10 +31,12 @@ import { DxPopupModule } from "devextreme-angular"
     FormsModule,
     DxMenuModule,
     DxPopupModule,
+    DxScrollViewModule,
   ],
   declarations: [
     AppComponent,
     EditorComponent,
+    VertexComponent,
     OutlineComponent,
     ComponentItemComponent,
     ComponentListComponent,
@@ -38,6 +44,7 @@ import { DxPopupModule } from "devextreme-angular"
     ToolbarComponent,
     ToolbarGroupComponent,
   ],
+  entryComponents: [ VertexComponent ],
   providers: [ AppService ],
   bootstrap: [AppComponent]
 })

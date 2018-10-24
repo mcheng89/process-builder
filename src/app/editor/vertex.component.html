@@ -1,0 +1,55 @@
+<div class="content">
+  <div class="icon">
+    <span class="fa-stack fa-2x">
+      <i class="fas fa-circle fa-stack-2x"></i>
+      <i class="fas fa-cog fa-stack-1x fa-inverse"></i>
+    </span>
+  </div>
+  <div class="task">
+    <div class="name">{{component}}</div>
+    <div class="description">Input > Table input</div>
+  </div>
+</div>
+<div class="actions">
+  <div class="edit" (click)="editComponentVisible = true">Edit</div>
+  <div class="delete" (click)="delete()">Delete</div>
+</div>
+
+<dx-popup class="component-properties" [title]="component" height="370" width="330" [resizeEnabled]="true" [shading]="false" [(visible)]="editComponentVisible">
+    <div *dxTemplate="let data of 'content'" class="content">
+      <dx-scroll-view direction="both">
+        <div class="info">
+          <div class="icon">
+            <span class="fa-stack fa-2x">
+              <i class="fas fa-circle fa-stack-2x"></i>
+              <i class="fas fa-cog fa-stack-1x fa-inverse"></i>
+            </span>
+          </div>
+          <div class="task">
+            <div class="name">Input > Table input</div>
+            <div class="description">Sample text explaining task. Ex: Load data from database as input into transformations. Sample text explaining task. Ex: Load data from database as input into transformations</div>
+          </div>
+        </div>
+        <div class="form">
+          <div class="row">
+            <div class="label">Task Name</div>
+            <div class="input"><input type="text" placeholder="Task Name" [(ngModel)]="component"></div>
+          </div>
+          <div class="row">
+            <div class="label">Task Description</div>
+            <div class="input"><input type="text" placeholder="Task Description"></div>
+          </div>
+        </div>
+        <div class="form">
+          <div class="title">Parameters</div>
+          <div class="row">
+            <div class="label">SQL Query</div>
+            <div class="input"><input type="text" placeholder="SQL Query"></div>
+          </div>
+        </div>
+      </dx-scroll-view>
+      <div class="actions">
+        <div class="button save" (click)="save()">Done</div>
+      </div>
+    </div>
+</dx-popup>

@@ -19,7 +19,7 @@ export class ComponentItemComponent implements AfterViewInit {
   @Input('graph') graph;
 
   width: number = 220;
-  height: number = 60;
+  height: number = 85;
 
   ngAfterViewInit() {
     var dragSource = mxUtils.makeDraggable(this.componentEl.nativeElement, this.graph,
