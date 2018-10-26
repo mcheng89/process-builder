@@ -7,6 +7,8 @@ import {
   mxUtils,
 } from 'mxgraph/javascript/mxClient';
 
+import { VertexComponent } from '../editor/vertex.component';
+
 @Component({
   selector: 'component-item',
   templateUrl: './component-item.component.html',
@@ -18,13 +20,10 @@ export class ComponentItemComponent implements AfterViewInit {
   @Input('item') item;
   @Input('graph') graph;
 
-  width: number = 220;
-  height: number = 85;
-
   ngAfterViewInit() {
     var dragSource = mxUtils.makeDraggable(this.componentEl.nativeElement, this.graph,
       this.onDragSuccess,
-      this.createDragPreview(this.width, this.height),
+      this.createDragPreview(VertexComponent.minWidth, VertexComponent.minHeight),
       0, 0,
       this.graph.autoscroll,
       true, true
@@ -44,7 +43,7 @@ export class ComponentItemComponent implements AfterViewInit {
     console.log(elt);
 
     var value = this.item.label;
-    var cells = [new mxCell(value, new mxGeometry(0, 0, this.width, this.height))];
+    var cells = [new mxCell(value, new mxGeometry(0, 0, VertexComponent.minWidth, VertexComponent.minHeight))];
     cells[0].vertex = true;
 
     graph.model.beginUpdate();

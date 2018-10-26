@@ -62,10 +62,6 @@
     &.dx-popup-wrapper > .dx-overlay-content {
       border-radius: 3px;
     }
-    .dx-popup-title.dx-toolbar .dx-toolbar-label {
-      font-size: 14px;
-      font-weight: bold;
-    }
     .dx-popup-title .dx-closebutton .dx-icon {
       font-size: 13px;
     }
@@ -74,12 +70,28 @@
       background: #eef1f3;
       color: #32363c;
       border-bottom: 1px solid #e1e4e8;
-    }
-    .dx-popup-title.dx-toolbar {
-      padding: 3px 16px;
-    }
-    .dx-popup-title.dx-toolbar .dx-toolbar-items-container {
-      height: 30px;
+      padding: 7px 16px 6px;
+      display: flex;
+
+      .label {
+        font-size: 14px;
+        font-weight: bold;
+        flex: 1;
+      }
+
+      .actions {
+        display: flex;
+        align-items: center;
+
+        .icon {
+          margin-left: 11px;
+          cursor: pointer;
+          font-size: 13px;
+        }
+        .close {
+          font-size: 16px;
+        }
+      }
     }
     .dx-popup-title .dx-closebutton .dx-icon {
       color: #32363c;
@@ -100,94 +112,96 @@
     .content {
       display: flex;
       flex-direction: column;
-    }
 
-    .info {
-      flex: 1;
-      display: flex;
-      align-items: flex-start;
-      padding: 10px 14px;
-      border-bottom: 1px solid #e1e4e8;
-    }
-    .task {
-      flex: 1;
-      width: 1%;
-      text-align: left;
-  
-      .name {
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
+      .info {
+        flex: 1;
+        display: flex;
+        align-items: flex-start;
+        padding: 10px 14px;
+        border-bottom: 1px solid #e1e4e8;
       }
-      .name {
-        font-size: 14px;
-        margin-bottom: 3px;
+      .task {
+        flex: 1;
+        width: 1%;
+        text-align: left;
+    
+        .name {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+        .name {
+          font-size: 14px;
+          margin-bottom: 3px;
+          font-weight: bold;
+        }
+        .description {
+          font-size: 11px;
+          color: #696969;
+        }
+      }
+      .icon {
+        color: #7000fb;
+        font-size: 9px;
+        margin-right: 10px;
+        margin-top: 5px;
+      }
+
+      .form {
+        padding: 13px 18px;
+        flex: 1;
+        border-bottom: 1px solid #e1e4e8;
+
+        .title {
+          font-size: 14px;
+          margin-bottom: 8px;
+          font-weight: bold;
+          color: #696969;
+        }
+        .row {
+          margin-bottom: 12px;
+        }
+        .label {
+          color: #32363c;
+          font-size: 12px;
+          font-weight: bold;
+          margin-bottom: 3px;
+        }
+        .input input {
+          width: 100%;
+          border-radius: 2px;
+          outline: none;
+          border: 1px solid #dadada;
+          background: #f4f5f7;
+          padding: 7px 0 7px 7px;
+          font-size: 13px;
+        }
+      }
+      .form:last-child {
+        border-bottom: 0;
+      }
+
+      .actions {
+        padding: 11px 19px 14px;
+        border-top: 1px solid #e1e4e8;
+      }
+      .button.save {
+        background-color: #2ab321;
+        color: #fff;
         font-weight: bold;
       }
-      .description {
-        font-size: 11px;
-        color: #696969;
+      .button.cancel {
+        background: #dadada;
+      }
+      .button {
+        padding: 7px 17px;
+        font-size: 13px;
+        border-radius: 2px;
+        cursor: pointer;
+        text-align: center;
       }
     }
-    .icon {
-      color: #7000fb;
-      font-size: 9px;
-      margin-right: 10px;
-      margin-top: 5px;
-    }
 
-    .title {
-      font-size: 14px;
-      margin-bottom: 8px;
-      font-weight: bold;
-      color: #696969;
-    }
 
-    .form {
-      padding: 13px 18px;
-      flex: 1;
-      border-bottom: 1px solid #e1e4e8;
-    }
-    .form:last-child {
-      border-bottom: 0;
-    }
-    .row {
-      margin-bottom: 12px;
-    }
-    .label {
-      color: #32363c;
-      font-size: 12px;
-      font-weight: bold;
-      margin-bottom: 3px;
-    }
-    .input input {
-      width: 100%;
-      border-radius: 2px;
-      outline: none;
-      border: 1px solid #dadada;
-      background: #f4f5f7;
-      padding: 7px 0 7px 7px;
-      font-size: 13px;
-    }
-
-    .actions {
-      padding: 11px 19px 14px;
-      border-top: 1px solid #e1e4e8;
-    }
-    .button.save {
-      background-color: #2ab321;
-      color: #fff;
-      font-weight: bold;
-    }
-    .button.cancel {
-      background: #dadada;
-    }
-    .button {
-      padding: 7px 17px;
-      font-size: 13px;
-      border-radius: 2px;
-      cursor: pointer;
-      text-align: center;
-    }
   }
 }

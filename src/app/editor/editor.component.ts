@@ -31,10 +31,6 @@ mxGraphView.prototype.minGridSize = 4;
 mxGraphView.prototype.graphBackground = '#f5f5f5';
 mxGraphView.prototype.gridColor = '#dae4f9';
 
-const minWidth = 220;
-const minHeight = 85;
-
-
 @Component({
   selector: 'editor',
   templateUrl: './editor.component.html',
@@ -87,8 +83,8 @@ export class EditorComponent implements AfterViewInit {
     mxVertexHandler.prototype.union = function (bounds: any, dx: any, dy: any, index: any, gridEnabled: any, scale: any, tr: any) {
       var result = vertexHandlerUnion.apply(this, arguments);
 
-      result.width = Math.max(result.width, minWidth);
-      result.height = Math.max(result.height, minHeight);
+      result.width = Math.max(result.width, VertexComponent.minWidth);
+      result.height = Math.max(result.height, VertexComponent.minHeight);
 
       return result;
     }
@@ -119,8 +115,8 @@ export class EditorComponent implements AfterViewInit {
     // Adds cells to the model in a single step
     graph.getModel().beginUpdate();
     try {
-      var v1 = graph.insertVertex(parent, null, 'Load Oracle Table', 150, 80, minWidth, minHeight);
-      var v2 = graph.insertVertex(parent, null, 'Pivot Records', 210, 260, minWidth, minHeight);
+      var v1 = graph.insertVertex(parent, null, 'Load Oracle Table', 150, 80, VertexComponent.minWidth, VertexComponent.minHeight);
+      var v2 = graph.insertVertex(parent, null, 'Pivot Records', 210, 260, VertexComponent.minWidth, VertexComponent.minHeight);
       var e1 = graph.insertEdge(parent, null, '', v1, v2);
     }
     finally {
