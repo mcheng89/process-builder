@@ -4,7 +4,7 @@ import {
   mxOutline
 } from 'mxgraph/javascript/mxClient';
 
-import { EditorComponent } from './editor.component';
+import { EditorPageLayoutService } from './editor-layout.service';
 
 @Component({
   selector: 'outline',
@@ -12,6 +12,10 @@ import { EditorComponent } from './editor.component';
   styleUrls: ['./outline.component.scss']
 })
 export class OutlineComponent {
+  constructor(
+    private editorPageLayoutSvc: EditorPageLayoutService,
+  ) { }
+
   @ViewChild('outline') outlineEl: ElementRef;
 
   private _graph;
@@ -24,7 +28,7 @@ export class OutlineComponent {
 
       outline.init(this.outlineEl.nativeElement);
 
-      EditorComponent.setupPageBackground(outline.outline);
+      this.editorPageLayoutSvc.setupPageBackground(outline.outline);
 
       // force initial background refresh...
       outline.outline.view.validateBackground();

@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { AppService } from './app.service';
 
 import { EditorComponent } from './editor/editor.component';
+import { EditorPageLayoutService } from './editor/editor-layout.service';
 import { VertexComponent } from './editor/vertex.component';
 import { HoverIconsComponent } from './editor/hover-icons.component';
 import { OutlineComponent } from './editor/outline.component';
@@ -47,7 +48,10 @@ import {
     ToolbarGroupComponent,
   ],
   entryComponents: [ VertexComponent ],
-  providers: [ AppService ],
+  providers: [
+    AppService,
+    EditorPageLayoutService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
