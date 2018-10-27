@@ -1,0 +1,4 @@
+<img *ngIf="selectedCell" [src]="imageSrc(triangleUp)" class="arrow" draggable="false" [style.top]="(y - triangleUp.height - arrowPadding)*scale + 'px'" [style.left]="(x + w/2 - triangleUp.width/2)*scale + 'px'">
+<img *ngIf="selectedCell" [src]="imageSrc(triangleDown)" class="arrow" draggable="false" [style.top]="(y + h + arrowPadding)*scale + 'px'" [style.left]="(x + w/2 - triangleDown.width/2)*scale + 'px'">
+<img *ngIf="selectedCell" [src]="imageSrc(triangleRight)" class="arrow" draggable="false" [style.top]="(y + h/2 - triangleRight.height/2)*scale + 'px'" [style.left]="(x + w + arrowPadding)*scale + 'px'">
+<img *ngIf="selectedCell" [src]="imageSrc(triangleLeft)" class="arrow" draggable="false" [style.top]="(y + h/2 - triangleLeft.height/2)*scale + 'px'" [style.left]="(x - triangleLeft.width - arrowPadding)*scale + 'px'">

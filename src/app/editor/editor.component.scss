@@ -5,6 +5,13 @@
   background-color: #ebebeb;
   overflow: auto;
   position: relative;
+
+  hover-icons {
+    position: absolute;
+  }
+  ::ng-deep > svg {
+    position: absolute;
+  }
 }
 
 ::ng-deep .geBackgroundPage {

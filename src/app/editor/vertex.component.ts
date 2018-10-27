@@ -13,6 +13,9 @@ export class VertexComponent {
   static minWidth = 230;
   static minHeight = 80;
 
+  // mxgraph cell instance
+  cell: any;
+
   editComponentVisible: boolean = false;
 
   show() {
@@ -38,7 +41,7 @@ export class VertexComponent {
 
     const popups = Array.from(document.getElementsByClassName("dx-popup-wrapper"));
     const maxZIndex = Math.max(...popups.map(e => (<any>(<HTMLElement>e).style.zIndex)));
-    
+
     if (popupContainer.style.zIndex != maxZIndex + "") {
       popupContainer.style.zIndex = <any>maxZIndex + 1;
       popupWrapper.style.zIndex = <any>maxZIndex + 1;

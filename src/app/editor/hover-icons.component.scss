@@ -1,0 +1,8 @@
+.arrow {
+  position: absolute;
+  z-index: 10000;
+  opacity: .15;
+}
+.arrow:hover {
+  opacity: 1;
+}

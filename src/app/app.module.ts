@@ -9,6 +9,7 @@ import { AppService } from './app.service';
 
 import { EditorComponent } from './editor/editor.component';
 import { VertexComponent } from './editor/vertex.component';
+import { HoverIconsComponent } from './editor/hover-icons.component';
 import { OutlineComponent } from './editor/outline.component';
 
 import { ComponentItemComponent } from './components/component-item.component';
@@ -37,6 +38,7 @@ import {
     AppComponent,
     EditorComponent,
     VertexComponent,
+    HoverIconsComponent,
     OutlineComponent,
     ComponentItemComponent,
     ComponentListComponent,

@@ -70,6 +70,8 @@ export class EditorComponent implements AfterViewInit {
         const componentRef = vertexComponent.create(self.injector, [], container);
         self.applicationRef.attachView(componentRef.hostView);
         componentRef.instance.component = cell.value;
+        componentRef.instance.cell = cell;
+        cell.componentRef = componentRef;
 
         container.style.height = (cell.geometry.height) + "px";
         container.style.width = (cell.geometry.width) + "px";
