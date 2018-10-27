@@ -7,6 +7,7 @@ import {
   mxEvent,
   mxGraph,
   mxGraphView,
+  mxKeyHandler,
   mxRectangle,
   mxRectangleShape,
   mxRubberband,
@@ -94,6 +95,18 @@ export class EditorComponent implements AfterViewInit {
     graph.isCellEditable = function (cell: any) {
       return false;
     };
+
+    mxEvent.addListener(document, 'keydown', (e) => {
+      if(e.keyCode == 46) {
+        console.log('delete cells');
+        // Cancels interactive operations
+        graph.escape();
+        var cells = graph.getDeletableCells(graph.getSelectionCells());
+        if (cells != null && cells.length > 0) {
+          graph.removeCells(cells, true);
+        }
+      }
+    });
 
     // Changes the default style for edges
     style = graph.getStylesheet().getDefaultEdgeStyle();
