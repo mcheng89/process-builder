@@ -6,7 +6,7 @@
     </span>
   </div>
   <div class="task">
-    <div class="name">{{component}}</div>
+    <div class="name">{{component.name}}</div>
     <div class="description">Input > Table input</div>
   </div>
 </div>
@@ -15,9 +15,9 @@
   <div class="delete" (click)="show()">Delete</div>
 </div>
 
-<dx-popup class="component-properties" [title]="component" [(fullScreen)]="fullscreen" height="370" width="350" [resizeEnabled]="true" [shading]="false" [(visible)]="editComponentVisible">
+<dx-popup class="component-properties" [title]="component.name" [(fullScreen)]="fullscreen" height="370" width="350" [resizeEnabled]="true" [shading]="false" [(visible)]="editComponentVisible">
   <div *dxTemplate="let data of 'title'" class="title" (mousedown)="focusVertex()">
-    <div class="label">{{component}}</div>
+    <div class="label">{{component.name}}</div>
     <div class="actions">
       <!--div class="icon" (click)="minimize()"><i class="far fa-window-minimize"></i></div-->
       <div class="icon" (click)="maximize()"><i class="far fa-window-maximize"></i></div>
@@ -41,7 +41,7 @@
       <div class="form">
         <div class="row">
           <div class="label">Task Name</div>
-          <div class="input"><input type="text" placeholder="Task Name" [(ngModel)]="component"></div>
+          <div class="input"><input type="text" placeholder="Task Name" [(ngModel)]="component.name"></div>
         </div>
         <div class="row">
           <div class="label">Task Description</div>

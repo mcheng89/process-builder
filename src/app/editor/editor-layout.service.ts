@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import {
   mxConstants,
+  mxEvent,
   mxRectangle,
   mxRectangleShape,
   mxPoint,
@@ -12,9 +13,17 @@ import { Base64 } from 'js-base64';
 
 @Injectable()
 export class EditorPageLayoutService {
-   constructor() { }
+  constructor() { }
 
-   setupPageBackground(graph) {
+  setupLayout(graph) {
+    this.setupPageBackground(graph);
+    this.listenGraphSizeChange(graph);
+
+    // force inital size refresh
+    graph.sizeDidChange();
+  }
+
+  setupPageBackground(graph) {
     // https://github.com/jgraph/mxgraph/blob/master/javascript/examples/grapheditor/www/js/Editor.js#L1747
     // Uses HTML for background pages (to support grid background image)
     graph.view.validateBackgroundPage = function () {
@@ -214,5 +223,60 @@ export class EditorPageLayoutService {
 
     // Force the first call to setup background
     graph.view.validateBackground();
+  }
+
+  // adjust for padding & page sizes
+  listenGraphSizeChange(graph) {
+    mxEvent.addListener(window, 'resize', () => {
+      graph.sizeDidChange();
+    });
+
+    var graphSizeDidChange = graph.sizeDidChange;
+    graph.sizeDidChange = function () {
+      if (this.container != null && mxUtils.hasScrollbars(this.container)) {
+        var pages = this.getPageLayout();
+        var pad = this.getPagePadding();
+        var size = this.getPageSize();
+
+        // Updates the minimum graph size
+        var minw = Math.ceil(2 * pad.x + pages.width * size.width);
+        var minh = Math.ceil(2 * pad.y + pages.height * size.height);
+
+        var min = graph.minimumGraphSize;
+
+        // LATER: Fix flicker of scrollbar size in IE quirks mode
+        // after delayed call in window.resize event handler
+        if (min == null || min.width != minw || min.height != minh) {
+          graph.minimumGraphSize = new mxRectangle(0, 0, minw, minh);
+        }
+
+        // Updates auto-translate to include padding and graph size
+        var dx = pad.x - pages.x * size.width;
+        var dy = pad.y - pages.y * size.height;
+
+        if (!this.autoTranslate && (this.view.translate.x != dx || this.view.translate.y != dy)) {
+          this.autoTranslate = true;
+          this.view.x0 = pages.x;
+          this.view.y0 = pages.y;
+
+          // NOTE: THIS INVOKES THIS METHOD AGAIN. UNFORTUNATELY THERE IS NO WAY AROUND THIS SINCE THE
+          // BOUNDS ARE KNOWN AFTER THE VALIDATION AND SETTING THE TRANSLATE TRIGGERS A REVALIDATION.
+          // SHOULD MOVE TRANSLATE/SCALE TO VIEW.
+          var tx = graph.view.translate.x;
+          var ty = graph.view.translate.y;
+          graph.view.setTranslate(dx, dy);
+
+          // LATER: Fix rounding errors for small zoom
+          graph.container.scrollLeft += Math.round((dx - tx) * graph.view.scale);
+          graph.container.scrollTop += Math.round((dy - ty) * graph.view.scale);
+
+          this.autoTranslate = false;
+
+          return;
+        }
+
+        graphSizeDidChange.apply(this, arguments);
+      }
+    };
   }
 }

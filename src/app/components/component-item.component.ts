@@ -42,7 +42,9 @@ export class ComponentItemComponent implements AfterViewInit {
     let elt = mxEvent.getSource(evt);
     console.log(elt);
 
-    var value = this.item.label;
+    var value = {
+      name: this.item.label
+    };
     var cells = [new mxCell(value, new mxGeometry(0, 0, VertexComponent.minWidth, VertexComponent.minHeight))];
     cells[0].vertex = true;
 

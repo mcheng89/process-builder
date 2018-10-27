@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, ViewChild, ElementRef, AfterViewInit, ComponentFactoryResolver, Injector, ApplicationRef } from '@angular/core';
+import { Component, Output, EventEmitter, ViewChild, ElementRef, AfterViewInit, ComponentFactoryResolver, Injector, ApplicationRef, Input } from '@angular/core';
 
 import {
   mxConstants,
@@ -44,6 +44,10 @@ export class EditorComponent implements AfterViewInit {
   private graph: any;
   @Output('graph') graphEmit = new EventEmitter();
 
+  private _model: any;
+  private modelRefreshing: boolean = false;
+  @Output('modelChange') modelEmit = new EventEmitter();
+
   ngAfterViewInit() {
     var self = this;
 
@@ -53,6 +57,9 @@ export class EditorComponent implements AfterViewInit {
 
     // add selection...
     var rubberband = new mxRubberband(graph);
+
+    // add connection support
+    graph.setAllowDanglingEdges(false);
 
     // custom vertex rendering...
     let style = graph.getStylesheet().getDefaultVertexStyle();
@@ -64,6 +71,7 @@ export class EditorComponent implements AfterViewInit {
         var container = document.createElement('div');
         const vertexComponent = self.componentFactoryResolver.resolveComponentFactory(VertexComponent);
         const componentRef = vertexComponent.create(self.injector, [], container);
+        // attach component to the appRef so that it's inside the ng component tree
         self.applicationRef.attachView(componentRef.hostView);
         componentRef.instance.component = cell.value;
         componentRef.instance.cell = cell;
@@ -76,6 +84,15 @@ export class EditorComponent implements AfterViewInit {
       }
       return graphGetLabel.apply(this, arguments);
     }
+    graph.addListener(mxEvent.CELLS_REMOVED, (graph, event) => {
+      console.log(event);
+      event.properties.cells
+        .filter(cell => cell.vertex)
+        .forEach(cell => {
+          this.applicationRef.detachView(cell.componentRef.hostView);
+          cell.componentRef.destroy();
+        });
+    });
     // min width/height settings
     var vertexHandlerUnion = mxVertexHandler.prototype.union;
     mxVertexHandler.prototype.union = function (bounds: any, dx: any, dy: any, index: any, gridEnabled: any, scale: any, tr: any) {
@@ -111,87 +128,84 @@ export class EditorComponent implements AfterViewInit {
     style[mxConstants.STYLE_STROKECOLOR] = '#686868';
     style[mxConstants.STYLE_STROKEWIDTH] = 2;
 
-    this.editorPageLayoutSvc.setupPageBackground(graph);
-    this.listenGraphSizeChange();
+    this.editorPageLayoutSvc.setupLayout(graph);
 
     // force size refresh, then adjust initial scrollbar location
-    graph.sizeDidChange();
     this.resetView();
+
+    // load initial model
+    graph.model.addListener(mxEvent.CHANGE, () => {
+      if (this.modelRefreshing) {
+        console.log("mxevent change for model refresh...");
+      } else {
+        const cells = graph.getChildCells(graph.getDefaultParent(), true, true);
+        const model = {
+          tasks: [],
+          relationships: [],
+        };
+        cells.filter(cell => cell.vertex).forEach(cell => {
+          cell.value.x = cell.geometry.x;
+          cell.value.y = cell.geometry.y;
+          cell.value.w = cell.geometry.width;
+          cell.value.h = cell.geometry.height;
+          model.tasks.push(cell.value);
+        });
+        cells.filter(cell => cell.edge).forEach(cell => {
+          model.relationships.push({
+            from: cell.source.value.name,
+            to: cell.target.value.name,
+          });
+        });
+        console.log(model);
+        this._model = model;
+        this.modelEmit.emit(model);
+      }
+    });
+    if (this._model) {
+      this.refreshModel();
+    }
+
+    setTimeout(() => this.graphEmit.emit(graph), 1);
+  }
+
+  @Input('model') set model(value) {
+    if (!this.graph) {
+      this._model = value;
+    } else if (this._model != value) {
+      this._model = value;
+      this.refreshModel();
+    }
+  }
+  refreshModel() {
+    console.log("refreshing graph model...");
+    var graph = this.graph;
 
     // Gets the default parent for inserting new cells. This
     // is normally the first child of the root (ie. layer 0).
     var parent = graph.getDefaultParent();
 
     // Adds cells to the model in a single step
+    this.modelRefreshing = true;
     graph.getModel().beginUpdate();
     try {
-      var v1 = graph.insertVertex(parent, null, 'Load Oracle Table', 150, 80, VertexComponent.minWidth, VertexComponent.minHeight);
-      var v2 = graph.insertVertex(parent, null, 'Pivot Records', 210, 260, VertexComponent.minWidth, VertexComponent.minHeight);
-      var e1 = graph.insertEdge(parent, null, '', v1, v2);
+      graph.removeCells(graph.getChildCells(graph.getDefaultParent(), true, true));
+
+      var tasks = [];
+      this._model.tasks.forEach(task => {
+        var v1 = graph.insertVertex(parent, null, task, task.x, task.y, task.w, task.h);
+        tasks[task.name] = v1;
+      });
+      this._model.relationships.forEach(relationship => {
+        var v1 = tasks[relationship.from];
+        var v2 = tasks[relationship.to];
+        var e1 = graph.insertEdge(parent, null, '', v1, v2);
+      });
     }
     finally {
       // Updates the display
       graph.getModel().endUpdate();
+      this.modelRefreshing = false;
     }
-
-    setTimeout(() => this.graphEmit.emit(graph), 1);
-  }
-
-  // adjust for padding & page sizes
-  listenGraphSizeChange() {
-    var graph = this.graph;
-
-    mxEvent.addListener(window, 'resize', () => {
-      graph.sizeDidChange();
-    });
-
-    var graphSizeDidChange = graph.sizeDidChange;
-    graph.sizeDidChange = function () {
-      if (this.container != null && mxUtils.hasScrollbars(this.container)) {
-        var pages = this.getPageLayout();
-        var pad = this.getPagePadding();
-        var size = this.getPageSize();
-
-        // Updates the minimum graph size
-        var minw = Math.ceil(2 * pad.x + pages.width * size.width);
-        var minh = Math.ceil(2 * pad.y + pages.height * size.height);
-
-        var min = graph.minimumGraphSize;
-
-        // LATER: Fix flicker of scrollbar size in IE quirks mode
-        // after delayed call in window.resize event handler
-        if (min == null || min.width != minw || min.height != minh) {
-          graph.minimumGraphSize = new mxRectangle(0, 0, minw, minh);
-        }
-
-        // Updates auto-translate to include padding and graph size
-        var dx = pad.x - pages.x * size.width;
-        var dy = pad.y - pages.y * size.height;
-
-        if (!this.autoTranslate && (this.view.translate.x != dx || this.view.translate.y != dy)) {
-          this.autoTranslate = true;
-          this.view.x0 = pages.x;
-          this.view.y0 = pages.y;
-
-          // NOTE: THIS INVOKES THIS METHOD AGAIN. UNFORTUNATELY THERE IS NO WAY AROUND THIS SINCE THE
-          // BOUNDS ARE KNOWN AFTER THE VALIDATION AND SETTING THE TRANSLATE TRIGGERS A REVALIDATION.
-          // SHOULD MOVE TRANSLATE/SCALE TO VIEW.
-          var tx = graph.view.translate.x;
-          var ty = graph.view.translate.y;
-          graph.view.setTranslate(dx, dy);
-
-          // LATER: Fix rounding errors for small zoom
-          graph.container.scrollLeft += Math.round((dx - tx) * graph.view.scale);
-          graph.container.scrollTop += Math.round((dy - ty) * graph.view.scale);
-
-          this.autoTranslate = false;
-
-          return;
-        }
-
-        graphSizeDidChange.apply(this, arguments);
-      }
-    };
   }
 
   resetScrollView() {

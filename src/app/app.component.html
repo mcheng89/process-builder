@@ -11,7 +11,7 @@
   </div>
   <div class="content">
     <component-list [graph]="graph"></component-list>
-    <editor (graph)="graph = $event"></editor>
+    <editor (graph)="graph = $event" [model]="model" (modelChange)="onModelChange($event)"></editor>
   </div>
 </div>
 <outline [graph]="graph" [(outlineVisible)]="outlineVisible"></outline>
